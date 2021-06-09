@@ -1,0 +1,220 @@
+
+//-----------------------------------------------------------------
+// Presets
+//-----------------------------------------------------------------
+
+$nav-height: 85px;
+$nav-height-m: 71px;
+$hpad-t: 21px;
+
+@mixin nav-height() {
+  height: $nav-height;
+  @media(max-width: $breakpoint_md) {
+    height: $nav-height-m;
+  }
+}
+
+@mixin listpad($pad, $bp, $mult: 1) {
+  @media(max-width: $bp) {
+    ul > li {
+      padding-bottom: $pad;
+      &:last-child {
+        padding-bottom: $mult * $pad;
+      }
+    }
+  }
+}
+
+@mixin shadow() {
+  box-shadow: 0 3px 2px -2px gray;  
+}
+
+//-----------------------------------------------------------------
+// Header
+//-----------------------------------------------------------------
+
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: white;
+  z-index: 90;
+  @include nav-height();
+  @media(max-width: $breakpoint_md) { @include shadow(); }
+}
+
+// Placeholder for normal content positioning post-header
+
+.empty-nav-div {
+  top: 0;
+	position: relative;
+	width: 100%;
+  z-index: -100;
+  
+  @media(max-width: $breakpoint_md) {
+    margin-bottom: $hpad-t;
+  }
+  
+	@include nav-height();
+}
+
+.headerpad { padding-top: $nav-height-m + $hpad-t; }
+
+.nav-header {
+  background-color: white;
+  
+  @media(max-width: $breakpoint_md) {
+    position: absolute;
+    left: -25rem;
+    right: -25rem;
+    transition: max-height .8s ease-out;
+    height: auto;
+    max-height: 0; // animation start point
+    
+    overflow: hidden;
+    text-align: center;
+    a { font-size: 20px; }
+    @include shadow();
+  }
+  
+  @include listpad(60px, $breakpoint_md);
+  @include listpad(35px, $breakpoint_sm);
+  
+  // Remove everything if switches viewport without clicking off
+  @media(min-width: $breakpoint_md) {
+    width: auto;
+    height: initial !important;
+    margin-top: 0;
+    padding-top: 0;
+    ul > li { padding: 0; }  
+  }
+}
+
+$colors: $w-orange, $w-green, $w-pink, $w-blue, $w-beige;
+
+.nav-header > ul > li {
+  
+  @media(min-width: $breakpoint_md) {
+    display: inline-block;
+    margin-right: 22px;
+    
+    border-top: 10px solid $w-orange;
+    padding-top: 17px;
+    padding-right: 10px;
+    &:nth-child(2) { padding-right: 20px; } // was in the design
+    
+    @for $i from 1 through length($colors) {
+      &:nth-child(#{length($colors)}n+#{$i}) {
+        border-color: nth($colors, $i);
+      }
+    }
+  }
+}
+.nav-header > ul > li:last-child { margin-right: 0; }
+
+.nav-header > ul > .current-menu-item > a,
+.nav-header > ul > li > a:hover { font-weight: 600; }
+
+
+.site-logo {
+  margin-top: 10px;
+  z-index: 100;
+  @media(max-width: $breakpoint_lg) {
+    width: 9.375rem;
+  }
+}
+
+// Edge graphics
+
+.hedge {
+  position: absolute;
+  max-height: initial;
+  
+  top: $nav-height;
+  @media(max-width: $breakpoint_md) {
+    top: $nav-height-m + $hpad-t;
+  }
+}
+
+//-----------------------------------------------------------------
+// Menu controls
+//-----------------------------------------------------------------
+
+.menu-open, .menu-close {
+  @include float-right();
+  margin-top: 24px;
+  cursor: pointer;
+  z-index: 100;
+  
+  @media(min-width: $breakpoint_md) {
+    display: none !important;
+  }
+}
+
+.menu-close {
+  display: none; // initially hidden
+}
+
+//-----------------------------------------------------------------
+// Footer
+//-----------------------------------------------------------------
+
+.site-footer {
+  background-color: $w-beige;
+  padding-top: 40px;
+  padding-bottom: 12px;
+  
+  h6 { margin-bottom: 14px; }
+}
+
+.footer-section {
+  @media(max-width: $breakpoint_md) {
+    margin-bottom: 40px;
+  }
+}
+.contacts /* ul */ > li {
+  margin-bottom: 10px;
+}
+.contacts /* ul */ > li span {
+  padding: 10px;
+}
+
+.social /* ul */ > li {
+  display: inline-block;
+  margin-right: 10px;
+  @media(min-width: 576px) {
+    margin-right: 0;
+    margin-left: 10px;
+  }
+}
+.social > li > a > img {
+  width: 42px;
+  height: 42px;
+  //border-radius: 50%;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

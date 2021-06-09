@@ -1,0 +1,761 @@
+
+//-----------------------------------------------------------------
+// Site layout
+//-----------------------------------------------------------------
+
+.site-main > div {
+  margin-bottom: 6.25rem;
+}
+
+.pull-up { // no margin on front page
+  margin-top: -6.25rem;
+}
+
+.site-overlay {
+	position: fixed;
+	display: none;
+	height: 100%;
+	width: 100%;
+	background-color: $indigo;
+	opacity: .8;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 200;
+}
+
+.site-main > .page-intro { // class selector overrides tag
+  @include margin(bottom, 50px, $md: 40px);
+  max-width: 45rem;
+  p { padding: 0 24px; }
+}
+
+//-----------------------------------------------------------------
+// Buttons
+//-----------------------------------------------------------------
+
+.shadow- {
+  &orange { box-shadow: 0px 8px 28px $w-orange; }
+  &green { box-shadow: 0px 8px 28px $w-green; }
+  &pink { box-shadow: 0px 8px 28px $w-pink; }
+  &blue { box-shadow: 0px 8px 28px $w-blue; }
+  &beige { box-shadow: 0px 8px 28px $w-beige; }
+}
+
+@mixin button($width, $height, $hover-height) {
+  width: $width;
+  height: $height;
+  
+  &:hover {
+    height: $hover-height;
+    //transform: scaleX(2);
+  }
+  
+  border-radius: 20px;
+  cursor: pointer;
+  transition: padding, height .25s;
+}
+
+.button-primary, [type=submit] {
+  @include button(12.75rem, 3.625rem, 4.25rem);
+}
+
+.button-secondary {
+  @include button(9.375rem, 3rem, 3.5rem);
+}
+
+.button-container { // attrocious class
+  display: inline-block;
+  margin: 35px 0;
+  height: 2rem; // counter CLS with height transition
+  
+  a:not(:last-child) button {
+    @media(min-width: $breakpoint_sm) {
+      margin-right: 26px;
+    }
+    @media(max-width: $breakpoint_sm) {
+      margin-bottom: 35px;
+    }
+  }
+}
+
+.clean-height {
+  button { vertical-align: top; }
+}
+
+.img-crop {
+  object-fit: cover;
+  height: 502px;
+  width: 502px;
+  @media(max-width: $breakpoint_sm) {
+    height: 295px;
+    width: 295px;
+  }
+  @media(min-width: $breakpoint_lg) {
+    width: 25.875rem;
+    height: 25.875rem;
+  }
+}
+
+
+//-----------------------------------------------------------------
+// Main | Block classes
+//-----------------------------------------------------------------
+
+@mixin block-min-height() {
+  @media(min-width: $breakpoint_lg) {
+    & > .container {
+      min-height: 25.875rem; // cheap fixes
+    }
+  }
+}
+.block-min-height { @include block-min-height(); }
+
+.cover-wrap {
+  @include margin(top, $lg: 50px, $sm: 40px);
+  @media(min-width: $breakpoint_lg) {
+    position: absolute;
+    top: 10rem;
+    margin-left: 3.5rem;
+    max-width: 25.5rem;
+    
+    h1 { margin-bottom: 18.6px; }
+  }
+}
+
+.blueprints {
+  @media(min-width: $breakpoint_lg) {
+    margin-top: -9rem;
+    padding-top: 9rem;
+  }
+  padding: 5.25rem 0 3.125rem;
+  background-color: rgba(203, 225, 156, .2);
+  @media(max-width: $breakpoint_sm), (min-width: 576px) { img { width: 100%; } }
+}
+
+/*.row > */.blueprint {
+  @media(min-width: $breakpoint_sm) {
+    max-height: 17.25rem;
+  }
+  display: flex;
+  justify-content: center;
+}
+
+.stories-lead {
+  display: flex;
+  flex-direction: column;
+  @media(min-width: $breakpoint_lg) {
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-between;
+    
+    img { max-width: 37rem; }
+  }
+  @media(max-width: $breakpoint_lg) {
+    img { align-self: center; } 
+  }
+}
+
+.lead-wrap {
+  @media(min-width: $breakpoint_lg) {
+    max-width: 25rem;
+  }
+  order: 0;
+}
+
+.book-sources {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  
+  img { max-height: 4rem; }
+  
+  div { 
+    @include margin(bottom, $md: 40px);
+    @media(min-width: $breakpoint_md) {
+      @include margin(right, 30px, $last-child: false);
+    }
+  }
+  
+  @media(max-width: $breakpoint_md) {
+    flex-wrap: wrap;
+  }
+  @media(max-width: $breakpoint_sm) {
+    justify-content: center;
+  }
+}
+
+.author-expo { 
+  padding: 5.25rem 0 5.25rem;
+  
+  .profile-image {
+    height: 295px;
+    width: 295px;
+    @media(min-width: $breakpoint_sm) {
+      width: 25.875rem;
+      height: 25.875rem;
+    }
+    position: relative;
+    display: block;
+    object-fit: cover;
+    border-radius: 80px 0 80px 0;
+  }
+  
+  @media(min-width: $breakpoint_lg) {
+    
+    & > .container {
+      min-height: 25.875rem; // cheap fixes
+    }
+    
+    & > .container > .title-box {
+      display: none;
+    }
+  }
+}
+
+.expo-wrap {
+  @extend .block-maxed;
+  text-align: left; // To counteract the "text right" that might be used as positioning on the parent
+  & > .title-box {
+    @media(max-width: $breakpoint_lg) {
+      display: none;
+    }
+  }
+   // could not figure out how to switch order for viewports properly, so a cheap workaround of hiding duplicate divs
+  @include block-min-height();
+}
+
+//-----------------------------------------------------------------
+// Carousel gallery
+//-----------------------------------------------------------------
+.book-preview-container {
+  @media(min-width: $breakpoint_lg) {
+    display: flex;
+    justify-content: space-between;
+  }
+}
+.book-preview {
+  @media(min-width: $breakpoint_md) {
+    max-width: 25.875rem;
+  }
+  display: inline-block;
+  margin-bottom: 50px;
+}
+.book-preview.overlay-open {
+  z-index: 250;
+  max-width: initial;
+  width: 85%;
+  
+  .thumbnail, .featured {
+    border: none;
+  }
+  .chevron, .zoom-glass {
+    display: none !important;
+  }
+  
+  @media(min-width: $breakpoint_lg) {
+    .spotlight { height: 30.5rem; }
+  }
+  @media(max-width: $breakpoint_lg) {
+    .spotlight { height: 40rem; }
+  }
+  @media(max-width: $breakpoint_sm) {
+    .spotlight { height: 20rem; }
+  }
+}
+
+.featured /*div (>) spotlight*/ {
+  margin-bottom: 10px;
+  text-align: center;
+  border: 1px solid $w-beige;
+}
+
+.spotlight /* = img*/ {
+  height: 20.063rem;
+  @media(max-width: $breakpoint_md) {
+    height: 24.375rem;
+  }
+  @media(max-width: $breakpoint_sm) {
+    height: 14.313rem;
+  }
+  object-fit: cover;
+}
+
+.zoom-glass {
+  @include float-right(11px);
+  bottom: 11px;
+}
+
+.slide-control {
+  fill: $medium-gray;
+  &:hover {
+    fill: $w-orange;
+    cursor: pointer;
+  }
+  @include offset-middle();
+  &.no-select-js {
+    &:hover {
+      fill: $medium-gray;
+      cursor: initial;
+    }
+  }
+}
+
+.chevron {
+  &:hover { fill: $black; }
+  background-color: white;
+}
+
+.slide-prev, .slide-left {
+  @include float-left();
+}
+.slide-next, .slide-right {
+  @include float-right();
+}
+
+.preview-gallery {
+  white-space: nowrap;
+  overflow: hidden;
+  text-align: center;
+}
+
+.preview-gallery /*ul*/ > li {
+  display: inline-block;
+}
+
+.thumbnail {
+  width: 61px;
+  height: 61px;
+  object-fit: cover;
+  opacity: 0.4 !important;
+	margin-right: 5px;
+  cursor: pointer;
+  transition: width .25s, height .25s, opacity .4s !important;
+  border: 1px solid $light-gray;
+  
+  &:hover { 
+    opacity: 1 !important;
+  }
+  
+  @media(max-width: $breakpoint_md) {
+    width: 74px;
+    height: 74px;
+  }
+  @media(max-width: $breakpoint_sm) {
+    width: 43px;
+    height: 43px;
+  }
+}
+
+.thumbnail.active {
+  width: 72px;  
+  opacity: 1 !important;
+  cursor: initial;
+
+  @media(max-width: $breakpoint_md) { width: 87px; }
+  @media(max-width: $breakpoint_sm) { width: 52px; }
+}
+
+.thumbnail.active, .chevron > svg, .preview-gallery {
+  height: 72px;
+
+  @media(max-width: $breakpoint_md) { height: 87px; }
+  @media(max-width: $breakpoint_sm) { height: 52px; }
+}
+
+.zoom-close {
+  position: absolute;
+  cursor: pointer;
+  right: 22px;
+  top: 22px;
+}
+
+
+//-----------------------------------------------------------------
+// Audio player
+//-----------------------------------------------------------------
+.audio-items, .audio-navigation {
+  position: relative;
+  max-width: 42.5rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.audio-item, .volume-control {
+  display: flex;
+  align-items: center;
+  .icon { margin-right: 20px; }
+}
+
+.audio-item {
+  min-height: 58px;
+  border-radius: 20px;
+  padding: 13px 20px;
+  border: 2px solid white;
+  &:hover, &.playing {
+    cursor: pointer;
+    font-weight: 600;
+    background-color: rgba(248, 192, 201, 0.2);
+    .icon { visibility: initial; }
+  }
+  .icon {
+    flex-shrink: 0;
+    float: left;
+    margin-right: 20px;
+    visibility: hidden;
+    @media(max-width: $breakpoint_sm) { margin-right: 13px; }
+  }
+}
+
+.progress-container {
+  background-color: rgba(248, 192, 201, 0.2);
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 13px 0;
+  height: 8px;
+  width: 100%;
+  @media(min-width: $breakpoint_sm) { width: 67%; }
+  @media(min-width: $breakpoint_md) { width: 75%; }
+}
+
+.progress {
+  background-color: $w-pink;
+  border-radius: 5px;
+  height: 100%;
+  width: 0%;
+  transition: width 0.1s linear;
+}
+
+.audio-path {
+  // Time tags are floated on sm need to adjust accordingly
+  @include margin(bottom, $lg: 40px, $sm: 76px);
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  @media(max-width: $breakpoint_sm) {
+    display: block;
+  }
+}
+
+.volume-control {
+  @media(min-width: $breakpoint_lg) {
+    position: absolute;
+    right: 0;
+    transform: translate(120%, -110%);
+  }
+}
+
+.volume-bar { width: 5.625rem; }
+
+.icon-prev, .icon-next, .icon-play, .icon-pause, .icon-volume {
+  cursor: pointer;
+  fill: #3d3d3d;
+  &:hover { fill: black; }
+}
+.icon-pause { display: none; }
+.icon-pause, .icon-play { margin: 0 35px; }
+
+time { width: 57px; } // Fix width so changing numbers don't shift other elements
+.list-time {
+  float: right;
+  margin-left: 30px;
+  @media(max-width: $breakpoint_sm) { display: none; }
+}
+
+#total-duration {
+  @media(max-width: $breakpoint_sm) { float: right; }
+}
+#current-duration {
+  @media(max-width: $breakpoint_sm) { position: absolute; top: 64px; } //controls + progress height
+}
+
+//-----------------------------------------------------------------
+// Video player
+//-----------------------------------------------------------------
+.video-stories { margin-bottom: 60px !important; }
+
+.video-item {
+  img {
+    width: 100%;
+    object-fit: cover;
+    max-height: 183px;
+    @media(min-width: $breakpoint_sm) and (max-width: $breakpoint_lg) { max-height: 148px; }
+  }
+  .video-name {
+    background-color: rgba(248, 192, 201, 0.2);
+    &:hover {
+      background-color: $w-pink;
+    }
+    border-radius: 0px 0px 20px 20px;
+    padding: 28px 14px;
+    @media(min-width: $breakpoint_lg) { padding: 40px 50px; }
+  }
+}
+
+.embed-container { 
+  box-shadow: 0 0 15px 15px $w-green;
+  z-index: 300;
+  position: fixed;
+  display: none;
+  @media(max-width: $breakpoint_sm) {
+    max-width: 90%;
+    top: 50%;
+    left: 5%;
+    transform: translateY(-50%);
+    iframe { max-width: 100% }
+  }
+}
+//-----------------------------------------------------------------
+.blueprint-files {
+  @media(min-width: $breakpoint_md) { margin-bottom: 40px !important; }
+  @media(min-width: $breakpoint_sm) and (max-width: 576px) { padding: 0 120px; }
+}
+
+.blueprint-file {
+  @include margin(bottom, 70px, $md: 10px);
+  //margin-bottom: 70px;
+  //@media(max-width: 576px) { margin-bottom: 21.4rem; }
+}
+
+.pdf-image {
+  height: 23.75rem;
+  @media(max-width: $breakpoint_md) { height: 17.3rem; }
+  @media(max-width: $breakpoint_sm) { height: 21.4rem; }
+  object-fit: cover;
+  box-shadow: 0px 2px 7px $light-gray;
+}
+
+.color-icon {
+  float: left;
+  position: relative;
+  transform: translateY(50%);
+}
+//-----------------------------------------------------------------
+
+.showcase-container {
+  @media(min-width: $breakpoint_lg) {
+    align-items: flex-end;
+  }
+  align-items: center;
+}
+
+.poem-text {
+  @include montserrat($font-size: 18px, $line-height: 26px);
+}
+
+.poem-tag {
+  border-radius: 0 80px 0 80px;
+  padding: 20px 52px;
+  min-width: 200px;
+  display: inline-block;
+}
+
+$box-padX: 36px;
+$box-padY: 45px;
+
+.poem-box {
+  @media(min-width: $breakpoint_sm) { width: 20.375rem; }
+  background-color: rgba(146, 198, 237, 0.2);
+  border-radius: 80px 0 80px 0;
+  padding: $box-padX;
+  @media(max-width: $breakpoint_sm) {
+    width: 100%;
+    padding: 21px;
+  }
+  @include margin(bottom, $lg: 40px);
+}
+
+.poem-library { 
+  display: flex;
+  @media(max-width: $breakpoint_md) {
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+  }
+}
+
+.poem-list {
+  max-height: 27.625rem;
+  border-radius: 80px 0 60px 0; // cheap fix
+  border-bottom: $box-padY solid transparent;
+  border-top: $box-padY solid transparent;
+  
+  padding: 0 $box-padX;
+  @media(max-width: $breakpoint_sm) { padding: 0 28px; }
+  
+  .poem-text { display: none; }
+  .poem-title {
+    &:hover { font-weight: 600; cursor: pointer; }
+  }
+}
+
+#poem-scroll {
+  border-radius: 5px;
+  right: $box-padX !important;
+  @media(max-width: $breakpoint_sm) {
+    right: 28px !important;
+  }
+}
+  
+.poem-container {
+  @media(min-width: $breakpoint_md) { margin-left: 20%; }
+}
+
+//-----------------------------------------------------------------
+// Contact form
+//-----------------------------------------------------------------
+// text-area reset
+textarea {
+  border: none;
+  outline: none;
+  box-shadow: none;
+}
+[placeholder]:focus::placeholder { color: transparent; }
+.ajax-loader { display: none !important; }
+.wpcf7 {
+  max-width: 31.375rem;
+  p { font-size: 16px !important; }
+  input, textarea {
+    background-color: rgba(241, 226, 195, .3);
+    border-radius: 10px;
+  }
+  [type=submit] {
+    background: $w-beige;
+    @extend .shadow-beige;
+  }
+  &-not-valid [type=checkbox]:not(:checked){ box-shadow: 0 0 3px 1px $red; }
+  textarea, input { &.wpcf7-not-valid { box-shadow: 0 0 3px 1px $red; } }
+
+  @include margin(bottom, $lg: 100px);
+}
+
+.wpcf7-text, .wpcf7-textarea {
+  padding: 20px;
+  width: 100%;
+}
+.wpcf7-text {
+  @include margin(bottom, 2rem, $sm: 26px);
+}
+.wpcf7-textarea {
+  height: 11.625rem;
+  margin-bottom: 8px;
+}
+.req-fields { color: $medium-gray; }
+
+.checkbox-wrap {
+  margin-top: 24px;
+  label {
+    display: inline-block;
+    margin-left: 40px;
+  }
+  .wpcf7-list-item {
+    margin: 0;
+  }
+  .wpcf7-form-control-wrap { position: absolute; }
+}
+.wpcf7-not-valid-tip { display: none; }
+#email-error, #success-icon, .incorrect, .correct { position: absolute; }
+#email-error { top: 40px; }
+.incorrect, .correct { right: 20px; top: 0 }
+
+.wpcf7-response-output {
+  border: none !important;
+  margin: 0 !important;
+  padding: 10px 30px !important;
+  position: relative;
+}
+
+#success-icon {
+  @media(max-width: $breakpoint_sm) { margin-top: -45px; }
+  margin-top: -28px;
+}
+
+[type=checkbox] {
+	-moz-appearance: none;
+  -webkit-appearance: none;
+	padding: 12px !important;
+	border-radius: 6px !important;
+	outline: none;
+	cursor: pointer;
+
+	&:checked {
+    background-image: url(../img/checkmark.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: $w-beige;
+	}
+  @media(min-width: $breakpoint_lg) {
+    &:hover {
+      background-image: url(../img/checkmark.svg);
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+  }
+}
+
+.contact-info-box {
+  border-radius: 10px;
+  padding: 56px 25px;
+  @media(min-width: $breakpoint_sm) {
+    padding: 56px 85px;
+    flex: 0 0 25.8rem;
+  }
+  p {
+    font-weight: 600;
+    margin-bottom: 13px;
+  }
+  li:not(:last-child) { margin-bottom: 40px !important; }
+}
+.contact-wrap {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  @media(max-width: $breakpoint_lg) {
+    flex-wrap: wrap;
+  }
+}
+
+.cc-window {
+  padding: 24px !important;
+  max-width: 23rem !important;
+  .cc-link {
+    color: $w-blue; text-decoration: none; &:hover { text-decoration: underline }
+  }
+  .cc-allow, .cc-deny {
+    text-transform: none !important;
+    font-family: Comfortaa;
+    height: 3.625rem;
+    line-height: 3.625rem;
+    padding: 0 20px !important;
+  }
+  .cc-allow {
+    color: #FFF !important;
+    background-color: $w-blue !important;
+    box-shadow: 0px 8px 28px $w-blue;
+    border-radius: 20px;
+    &:hover { transform: scale(1.025) }
+  }
+  .cc-deny {
+    color: $medium-gray !important;
+    background: transparent !important;
+    &:hover { color: $black !important; }
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,109 @@
+
+@mixin montserrat($font-size: 16px, $line-height: 1.2, $font-weight: 400, $color: $black) {
+  font-family: Montserrat;
+  font-size: $font-size;
+  line-height: $line-height;
+  font-weight: $font-weight;
+  color: $color;
+}
+
+@mixin comfortaa($font-size: 18px, $line-height: 1.2, $font-weight: 400, $color: $black) {
+  font-family: Comfortaa;
+  font-size: $font-size;
+  line-height: $line-height;
+  font-weight: $font-weight;
+  color: $color;
+}
+
+body, a, textarea, input, textarea::placeholder, input::placeholder {
+  @include montserrat();
+}
+
+p, .audio-container {
+  @include montserrat($font-size: 20px, $line-height: 1.5);
+}
+
+button, [type=submit] {
+  @include comfortaa($font-weight: 700);
+}
+
+
+// Editor basics
+.editor p { margin-bottom: 15px; }
+
+h1, h2, h3, h4, h5 {
+  font-family: Comfortaa;
+  color: $indigo;
+  margin-bottom: 2.5rem;
+}
+
+// Headings
+h1 {
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 1.1;
+  
+  @media(max-width: $breakpoint_sm) {
+    font-size: 40px;
+  }
+}
+
+h2 {
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 1.25;
+  
+  @media(max-width: $breakpoint_sm) {
+    font-size: 32px;
+  }
+}
+
+h3 {
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+h4 {
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+h5 {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.25;
+  
+  margin-top: -1.75rem;
+}
+
+h6 {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.1;
+}
+
+// List styles
+.ul,
+.editor ul:not(.wp-block-gallery) {
+  margin-bottom: 30px;
+
+  li {
+    position: relative;
+    padding-left: 15px;
+    margin-bottom: 10px;
+  }
+  li:last-child { margin-bottom: 0; }
+
+  li:before {
+    position: absolute;
+    top: 6px;
+    left: 0;
+    width: 6px;
+    height: 6px;
+    background: $c_primary;
+    border-radius: 50%;
+    content: '';
+  }
+}
